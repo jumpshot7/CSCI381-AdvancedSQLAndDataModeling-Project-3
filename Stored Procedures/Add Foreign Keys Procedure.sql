@@ -8,7 +8,7 @@ GO
 -- Description:	Adding Foreign Keys
 -- =============================================
 
-ALTER PROCEDURE [Project3].[AddForeignKeys] @UserAuthorizationKey INT
+CREATE PROCEDURE [Project3].[AddForeignKeys] @UserAuthorizationKey INT
 AS
 BEGIN
     -- SET NOCOUNT ON added to prevent extra result sets from

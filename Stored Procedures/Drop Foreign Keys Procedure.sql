@@ -8,9 +8,6 @@ GO
 -- Description:	Drop Foreign Keys
 -- =============================================
 
-CREATE SCHEMA Project3;
-GO
-
 CREATE PROCEDURE [Project3].[DropForeignKeys] @UserAuthorizationKey INT
 AS
 BEGIN
