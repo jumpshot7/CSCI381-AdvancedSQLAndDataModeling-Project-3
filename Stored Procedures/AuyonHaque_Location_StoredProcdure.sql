@@ -27,20 +27,20 @@ BEGIN
 
 	
 	DECLARE @SQL AS NVARCHAR(MAX)
-    SET @SQL='CREATE OR ALTER VIEW G10_4.uvw_RoomLocation AS SELECT DISTINCT COALESCE(NULLIF([Location],'' ''), ''AA TBA'') AS RoomLocation FROM Uploadfile.CurrentSemesterCourseOfferings;'
+    SET @SQL='CREATE OR ALTER VIEW project3.RoomLocation AS SELECT DISTINCT COALESCE(NULLIF([Location],'' ''), ''AA TBA'') AS RoomLocation FROM Uploadfile.CurrentSemesterCourseOfferings;'
     EXEC (@SQL)
 
 	DECLARE @SQL2 AS NVARCHAR(MAX)
-	SET @SQL2='CREATE OR ALTER VIEW G10_4.uvw_BuildingRoomNumber AS
+	SET @SQL2='CREATE OR ALTER VIEW project3.BuildingRoomNumber AS
 	SELECT SUBSTRING([RoomLocation], 3, 100) AS RoomNumber
-	FROM G10_4.uvw_RoomLocation;'
+	FROM project3.RoomLocation;'
 	EXEC (@SQL2)
 
-INSERT INTO [Location].[Load_RoomLocation]
+INSERT INTO [Location].[RoomLocation]
 (RoomLocation, UserAuthorizationKey, DateAdded, DateOfLastUpdate)
 
 SELECT CS.RoomNumber, @UserAuthorizationKey, @DateAdded, @DateOfLastUpdate
-FROM G10_4.uvw_BuildingRoomNumber AS CS;
+FROM project3.BuildingRoomNumber AS CS;
 
 
     DECLARE @EndingDateTime DATETIME2;
@@ -49,7 +49,7 @@ FROM G10_4.uvw_BuildingRoomNumber AS CS;
     DECLARE @WorkFlowStepTableRowCount INT;
     SET @WorkFlowStepTableRowCount =
     (
-        SELECT COUNT(*) FROM [Location].[Load_RoomLocation]
+        SELECT COUNT(*) FROM [Location].[RoomLocation]
     );
 
     EXEC [Process].[usp_TrackWorkFlow] 'Loads data into [Project3].[RoomLocation]',
@@ -59,7 +59,7 @@ FROM G10_4.uvw_BuildingRoomNumber AS CS;
                                        @UserAuthorizationKey;
 
 SELECT *
-FROM [Location].[Load_RoomLocation];
+FROM [Location].[RoomLocation];
 
 END;
 
