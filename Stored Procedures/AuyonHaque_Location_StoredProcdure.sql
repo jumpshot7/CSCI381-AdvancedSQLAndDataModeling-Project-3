@@ -7,10 +7,10 @@ GO
 -- Procedure: Project3.Load_RoomLocation
 -- Create Date: 5/15/2024
 -- Description: Loads data into RoomLocation
-DROP PROCEDURE IF EXISTS [Location].[Load_RoomLocation];
+DROP PROCEDURE IF EXISTS [Project3].[Load_RoomLocation];
 GO
 
-CREATE PROCEDURE [Location].[Load_RoomLocation]
+CREATE PROCEDURE [Project3].[Load_RoomLocation]
 	@UserAuthorizationKey [Udt].[SurrogateKeyInt]
 AS
 BEGIN
