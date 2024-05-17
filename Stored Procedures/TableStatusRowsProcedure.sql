@@ -14,7 +14,7 @@ GO
 -- =============================================
 -- Metadata about the procedure including the author, creation date, and a description of its purpose.
 
-CREATE PROCEDURE [Project3].[ShowTableStatusRowCount] @TableStatus VARCHAR(64), @UserAuthorizationKey INT 
+CREATE or ALTER PROCEDURE [Project3].[ShowTableStatusRowCount] @TableStatus VARCHAR(64), @UserAuthorizationKey INT 
 AS
 BEGIN
     -- Procedure declaration with parameters for table status and user authorization key.
