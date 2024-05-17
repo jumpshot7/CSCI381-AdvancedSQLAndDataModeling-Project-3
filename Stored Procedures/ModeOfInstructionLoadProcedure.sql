@@ -50,7 +50,7 @@ FROM
                                        @WorkFlowStepTableRowCount,
                                        @StartingDateTime,
                                        @EndingDateTime,
-                                       @ClassTime,
+                             
                                        @UserAuthorizationKey;
     SELECT *
     FROM [Course].[ModeOfInstruction];
