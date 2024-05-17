@@ -1,15 +1,29 @@
 USE QueensClassSchedule
+
+
 GO
+
+
 SET ANSI_NULLS ON;
+
 GO
+
 SET QUOTED_IDENTIFIER ON;
+
 GO
+
+
+
 
 -- Author:	Shengwei Jiang
 
 -- Create date: 5/15/2024
 
 -- Description:	Load Data Into BuildingLocation
+
+DROP PROCEDURE IF EXISTS [Project3].[Load_BuildingLocationmodifier]
+
+GO
 
 
 CREATE PROCEDURE [Project3].[Load_BuildingLocationmodifier] 
@@ -42,7 +56,7 @@ BEGIN
             COALESCE(NULLIF(SUBSTRING([Location], 1, 2), ''), 'TBA') AS BuildingLocation,
             COALESCE(NULLIF(SUBSTRING([Location], 3, 6), ''), 'TBA') AS RoomLocation
 
-        FROM Uploadfile.CurrentSemesterCourseOfferings
+        FROM QueensClassSchedule
     
 
     ), CTE_BuildingLocationJoin AS (
@@ -65,7 +79,11 @@ BEGIN
 
         ON BL.RoomLocation = RL.RoomLocation
         WHERE BL.[Location] != 'TBA'
+
+        
     )
+
+
 
     INSERT INTO [Location].BuildingLocation
 
@@ -78,11 +96,21 @@ BEGIN
     FROM CTE_BuildingLocationJoin;
 
 
+
+
+
     DECLARE @EndingDateTime [Udt].[DateOf] = SYSDATETIME();
+
+
+
+
 
     DECLARE @WorkFlowStepTableRowCount INT;
 
     SET @WorkFlowStepTableRowCount = (SELECT COUNT(*) FROM [Location].[BuildingLocation]);
+
+
+
 
 
     EXEC [Process].[usp_TrackWorkFlow] 
