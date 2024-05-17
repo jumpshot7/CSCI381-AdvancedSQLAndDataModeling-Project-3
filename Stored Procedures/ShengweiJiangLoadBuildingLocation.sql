@@ -21,12 +21,12 @@ GO
 
 -- Description:	Load Data Into BuildingLocation
 
-DROP PROCEDURE IF EXISTS [Project3].[Load_BuildingLocationmodifier]
+DROP PROCEDURE IF EXISTS [Project3].[Load_BuildingLocation]
 
 GO
 
 
-CREATE PROCEDURE [Project3].[Load_BuildingLocationmodifier] 
+CREATE PROCEDURE [Project3].[Load_BuildingLocation] 
 
     @UserAuthorizationKey [Udt].[SurrogateKeyInt]
 
@@ -56,7 +56,7 @@ BEGIN
             COALESCE(NULLIF(SUBSTRING([Location], 1, 2), ''), 'TBA') AS BuildingLocation,
             COALESCE(NULLIF(SUBSTRING([Location], 3, 6), ''), 'TBA') AS RoomLocation
 
-        FROM QueensClassSchedule
+        FROM Uploadfile.CurrentSemesterCourseOfferings
     
 
     ), CTE_BuildingLocationJoin AS (
@@ -96,7 +96,7 @@ BEGIN
     FROM CTE_BuildingLocationJoin;
 
 
-
+    SELECT top(1000) * from [Location].[BuildingLocation];
 
 
     DECLARE @EndingDateTime [Udt].[DateOf] = SYSDATETIME();
