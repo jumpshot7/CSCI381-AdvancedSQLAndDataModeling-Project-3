@@ -1,3 +1,5 @@
+USE QueensClassSchedule;
+
 SET ANSI_NULLS ON --  configure SQL Server settings to ensure consistent behavior regarding null comparisons and the use of quoted identifiers.
 GO
 SET QUOTED_IDENTIFIER ON
@@ -5,7 +7,7 @@ GO
 -- =============================================
 -- Author:       Zackaria Mamdouh
 -- Create date: 5/13/2024
--- Description: Track Work Flow
+-- Description: Procedure for TrackWorkFlow that will track what everyone is doing
 -- =============================================
 
 CREATE PROCEDURE [Process].[usp_TrackWorkFlow] -- This command creates a new stored procedure named usp_TrackWorkFlow in the Process schema.
@@ -30,10 +32,11 @@ BEGIN
         WorkFlowStepTableRowCount, -- The number of rows processed in the workflow step.
         StartingDateTime, -- The starting date and time of the workflow step.
         EndingDateTime, -- The ending date and time of the workflow step.
-        [Class Time], -- This column is hardcoded to '9:15'. This might be a default value or a specific time related to the workflow.
+        [ClassTime], -- This column is hardcoded to '9:15'. This might be a default value or a specific time related to the workflow.
         UserAuthorizationKey -- The user authorization key to track who executed the workflow step.
     )
     VALUES
     (@WorkflowDescription, @WorkFlowStepTableRowCount, @StartingDateTime, @EndingDateTime, '9:15',
      @UserAuthorizationKey);
 END;
+
