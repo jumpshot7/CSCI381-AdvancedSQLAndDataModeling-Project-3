@@ -64,5 +64,3 @@ BEGIN
     SELECT *
     FROM [Course].[Course];
 END;
-
-EXEC  [Project3].[Load_Course] @UserAuthorizationKey = 8;  
