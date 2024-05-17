@@ -12,7 +12,7 @@ GO
 -- Create date: 5/16/2024
 -- Description:	Procedure to load data for the application, handling data integrity and setup.
 -- =============================================
-CREATE PROCEDURE [Project3].[LoadData] @UserAuthorizationKey INT
+CREATE or alter PROCEDURE [Project3].[LoadData] @UserAuthorizationKey INT
 AS
 BEGIN
     -- Prevents extra messages from interfering with client applications
@@ -34,12 +34,12 @@ BEGIN
 
     -- Loads data into individual tables in a specified order for schema consistency
     EXEC [Project3].[Load_ModeOfInstruction] @UserAuthorizationKey = 1;
-    EXEC [Project3].[Load_Course] @UserAuthorizationKey = 6;
-    EXEC [Project3].[Load_Class] @UserAuthorizationKey = 5;
+    EXEC [Project3].[Load_Course] @UserAuthorizationKey = 8;
+    EXEC [Project3].[Load_Class] @UserAuthorizationKey = 1;
     EXEC [Project3].[Load_Department] @UserAuthorizationKey = 2;
-    EXEC [Project3].[Load_Instructor] @UserAuthorizationKey = 4;
-    EXEC [Project3].[Load_RoomLocation] @UserAuthorizationKey = 3;
-    EXEC [Project3].[Load_BuildingLocation] @UserAuthorizationKey = 7;
+    EXEC [Project3].[Load_Instructor] @UserAuthorizationKey = 2;
+    EXEC [Project3].[Load_RoomLocation] @UserAuthorizationKey = 2;
+    EXEC [Project3].[Load_BuildingLocation] @UserAuthorizationKey = 5;
 
     -- Recaptures the status and row counts of tables after data is loaded
     EXEC [Project3].[ShowTableStatusRowCount]
@@ -51,6 +51,9 @@ BEGIN
 
     -- Records the end time of the procedure execution
     DECLARE @EndingDateTime DATETIME2 = SYSDATETIME();
+
+    DECLARE @WorkFlowStepTableRowCount INT;
+    SET @WorkFlowStepTableRowCount = 0;
 
     -- Logs the completion of data loading, including workflow steps and duration
     EXEC [Process].[usp_TrackWorkFlow] 'Load Data',
