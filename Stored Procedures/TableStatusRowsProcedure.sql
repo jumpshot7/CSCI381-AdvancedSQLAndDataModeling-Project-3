@@ -43,11 +43,51 @@ BEGIN
 
     -- The following series of SELECT statements union results from different tables,
     -- inserting the specified table status, the table name, and the row count of each table.
-    SELECT TableStatus = @TableStatus,
-           TableName = 'Course.Class',
-           [Row Count] = COUNT(*)
+    SELECT  @TableStatus AS 'TableStatus',
+           'Course.Class' AS 'TableName ',
+           COUNT(*) AS 'ROW COUNT'
     FROM Course.Class
     UNION ALL
+    SELECT @TableStatus AS 'TableStatus',
+            'Course.Course' AS 'TableName ',
+           COUNT(*) AS 'ROW COUNT'
+    FROM Course.Course
+    UNION ALL
+    SELECT @TableStatus AS 'TableStatus',
+           'Department.Instructor' AS 'TableName ',
+           COUNT(*) AS 'ROW COUNT'
+    FROM Department.Instructor
+    UNION ALL
+    SELECT @TableStatus AS 'TableStatus',
+            'Course.ModeofInstruction' AS 'TableName ',
+           COUNT(*) AS 'ROW COUNT'
+    FROM Course.ModeOfInstruction
+    UNION ALL
+    SELECT @TableStatus AS 'TableStatus',
+            'Department.Department' AS 'TableName ',
+           COUNT(*) AS 'ROW COUNT'
+    FROM Department.Department
+    UNION ALL
+    SELECT @TableStatus AS 'TableStatus',
+           'Location.BuildingLocation' AS 'TableName ',
+           COUNT(*) AS 'ROW COUNT'
+    FROM [Location].BuildingLocation
+    UNION ALL
+    SELECT @TableStatus AS 'TableStatus',
+            'Location.RoomLocation' AS 'TableName ',
+           COUNT(*) AS 'ROW COUNT'
+    FROM [Location].RoomLocation
+    UNION ALL
+    SELECT @TableStatus AS 'TableStatus',
+           'DbSecurity.UserAuthorization'AS 'TableName ',
+           COUNT(*) AS 'ROW COUNT'
+    FROM [DbSecurity].UserAuthorization
+    UNION ALL
+    SELECT @TableStatus AS 'TableStatus',
+           'Process.WorkflowSteps' AS 'TableName ',
+           COUNT(*) AS 'ROW COUNT'
+    FROM [Process].WorkflowSteps;
+    
     -- Repeated for various tables under different schemas like Course, Department, Location, DbSecurity, and Process.
 
     SET @EndingDateTime = SYSDATETIME();
