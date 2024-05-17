@@ -11,7 +11,7 @@ GO
 -- Description:  This procedure is responsible for loading data into the Course.Class table 
 --               with transformations applied for compatibility and clarity.
 -- =============================================
-CREATE PROCEDURE [Project3].[Load_Class] @UserAuthorizationKey [Udt].[SurrogateKeyInt]
+CREATE or ALTER PROCEDURE [Project3].[Load_Class] @UserAuthorizationKey [Udt].[SurrogateKeyInt]
 AS
 BEGIN
     -- Disables the message that shows the count of rows affected by SQL statements.
@@ -57,7 +57,7 @@ BEGIN
         mo.ModeOfInstructionKey,
         COALESCE(a.[Mode of Instruction], 'TBA') AS ModeOfInstruction -- Ensures mode of instruction is never blank.
     FROM 
-        groupnUploadfile.CoursesSpring2017 AS a
+        Uploadfile.CurrentSemesterCourseOfferings AS a
     INNER JOIN [Course].[Course] AS c ON a.[Course (hr, crd)] = c.CourseName
     INNER JOIN Course.ModeOfInstruction AS mo ON a.[Mode of Instruction] = mo.ModeOfInstruction
     WHERE 
@@ -71,6 +71,10 @@ BEGIN
         *, @UserAuthorizationKey, @DateAdded, @DateOfLastUpdate
     FROM 
         ClassData;
+
+
+        SELECT TOP (1000)*
+  FROM [QueensClassSchedule].[Course].[Class];
 
     -- Records the end time of the data loading process.
     DECLARE @EndingDateTime [Udt].[DateOf];
