@@ -93,6 +93,9 @@ BEGIN
     SET @EndingDateTime = SYSDATETIME();
     -- Stores the end time of the procedure execution.
 
+         DECLARE @WorkFlowStepTableRowCount INT;
+    SET @WorkFlowStepTableRowCount = 0;
+
     -- Calls another stored procedure to log or process information about the current procedure's execution,
     -- passing relevant information such as the name, count of workflow steps processed, start and end times, and user authorization key.
     EXEC [Process].[usp_TrackWorkFlow] 'Procedure: [Project3].[ShowStatusRowCount]  loads data into [Project3].[ShowTableStatusRowCount]',
