@@ -23,13 +23,19 @@ BEGIN
     DECLARE @StartingDateTime [Udt].[DateOf];
     SET @StartingDateTime = SYSDATETIME();
 
-	DECLARE @SQL AS NVARCHAR(MAX)
-    SET @SQL='CREATE OR ALTER VIEW G10_4.uvw_ModeOfInstruction AS SELECT DISTINCT COALESCE(NULLIF([Mode of Instruction],''''), ''TBA'') AS ModeOfInstruction FROM Uploadfile.CurrentSemesterCourseOfferings;'
-    EXEC (@SQL)
-
-	INSERT INTO Course.ModeOfInstruction (ModeOfInstruction, UserAuthorizationKey, DateAdded, DateOfLastUpdate)
-	SELECT a.ModeOfInstruction, @UserAuthorizationKey, @DateAdded, @DateOfLastUpdate
-	FROM G10_4.uvw_ModeOfInstruction AS a;
+	WITH ModeOfInstructionCTE AS (
+    SELECT DISTINCT 
+        COALESCE(NULLIF([Mode of Instruction], ''), 'TBA') AS ModeOfInstruction
+    FROM 
+        Uploadfile.CurrentSemesterCourseOfferings)
+    INSERT INTO Course.ModeOfInstruction (ModeOfInstruction, UserAuthorizationKey, DateAdded, DateOfLastUpdate)
+    SELECT 
+    ModeOfInstruction, 
+    @UserAuthorizationKey, 
+    @DateAdded, 
+    @DateOfLastUpdate
+FROM 
+    ModeOfInstructionCTE;
 
     DECLARE @EndingDateTime [Udt].[DateOf];
     SET @EndingDateTime = SYSDATETIME();
